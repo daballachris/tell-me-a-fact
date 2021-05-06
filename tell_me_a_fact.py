@@ -9,14 +9,25 @@ from gtts import gTTS
 from bs4 import BeautifulSoup
 
 
-fact_page = requests.get("http://unkno.com/")
-scraped_data = BeautifulSoup(fact_page.text, 'html.parser')
+def get_fact():
+    """Gets a fact from unkno.com"""
 
-fact = scraped_data.find("div", {"id": "content"})
+    fact_page = requests.get("http://unkno.com/")
+    scraped_data = BeautifulSoup(fact_page.text, 'html.parser')
 
-tts = gTTS(fact.text)
-tts.save("temp.mp3")
+    return scraped_data.find("div", {"id": "content"}).text
 
-playsound.playsound('temp.mp3', True)
 
-os.remove("temp.mp3")
+def say_fact(fact_text):
+    """Says the fact (text to speech)"""
+
+    tts = gTTS(fact_text)
+    tts.save("temp.mp3")
+
+    playsound.playsound('temp.mp3', True)
+
+    os.remove("temp.mp3")
+
+
+if __name__ == '__main__':
+    say_fact(get_fact())
