@@ -2,9 +2,9 @@
 Mashup to get a random fact from unkno.com, and then say it to you
 """
 
+import os
 import playsound
 import requests
-import os
 from gtts import gTTS
 from bs4 import BeautifulSoup
 
